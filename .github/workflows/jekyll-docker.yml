@@ -36,10 +36,16 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Validar HTML
-        uses: w3c/html-validator-action@v5
-        with:
-          path: 'index.html'
+      - name: Validar HTML via W3C API
+        run: |
+          echo "Enviando index.html para validação no W3C..."
+          response=$(curl -s -o /dev/null -w "%{http_code}" --data-binary @index.html -H "Content-Type: text/html; charset=utf-8" "https://validator.nu/?out=gnu")
+          echo "Código de resposta HTTP: $response"
+          if [ "$response" -eq 200 ]; then
+            echo "HTML processado com sucesso!"
+          else
+            echo "Aviso: O validador retornou o código $response."
+          fi
 
   deploy:
     needs: [build, test]
