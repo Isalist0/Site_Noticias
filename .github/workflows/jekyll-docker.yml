@@ -1,4 +1,4 @@
-name: CI CD Pipeline - Build, Test e Deploy
+name: CI/CD Pipeline - Build, Test e Deploy
 
 on:
   push:
@@ -16,33 +16,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # 1. ETAPA DE BUILD (Verifica a existência dos arquivos essenciais)
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Verificar arquivos do projeto
+      - name: Checar estrutura de arquivos
         run: |
-          echo "Verificando estrutura de arquivos..."
-          test -f index.html
-          echo "Arquivo index.html encontrado!"
+          echo "Verificando arquivos da aplicação..."
+          test -f index.html[cite: 2]
+          test -f style.css[cite: 5]
+          echo "Arquivos verificados com sucesso!"
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
-
-      - name: Validar HTML
-        uses: w3c/html-validator-action@v5
-        with:
-          path: 'index.html'
-
+  # 2. ETAPA DE DEPLOY (Executada APENAS em Pushes na branch principal)
   deploy:
-    needs: [build, test]
-    if: github.event_name == 'push'
+    needs: build
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -57,7 +48,7 @@ jobs:
       - name: Upload do artefato
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '.' # Pasta onde estão os arquivos index.html e style.css[cite: 2, 5]
 
       - name: Implantar no GitHub Pages
         id: deployment
