@@ -2,16 +2,33 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [ "main" ] # ou "master", dependendo do nome da sua branch principal
+    branches: [ "main" ] # ou "master"
+
+# Permissões necessárias para o GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Permitir apenas um deploy simultâneo
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Configurar Pages e Implantar
+      - name: Configurar Pages
+        uses: actions/configure-pages@v4
+
+      - name: Enviar artefato (Upload artifact)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.' # Pasta onde está o seu index.html (raiz do repositório)
+
+      - name: Implantar no GitHub Pages
         uses: actions/deploy-pages@v4
