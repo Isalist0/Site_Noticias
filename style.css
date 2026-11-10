@@ -1,0 +1,60 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 10;
+    padding: 1;
+    background-color: white;
+}
+header{
+    background-color: green;
+    color: white;
+    text-align: center;
+    padding: 35px;
+    margin: 8;
+    margin-bottom: 10px;
+}
+.notícia{
+    border-bottom: 1px solid black;
+}
+.container{
+    width: 80%;
+    margin: auto;
+    background-color: rgb(160, 220, 130);
+    padding: 20px;
+}
+footer{
+    text-align: center;
+    padding: 20px;
+    background-color: green;
+    color: white;
+    margin-top: 10px;
+}
+.IA{
+    margin-left: 300px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.oscar{
+    margin-left: 300px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}    
+.calor{
+    margin-left: 300px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+nav ul{
+    list-style-type: none;
+}
+
+nav ul li{
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
