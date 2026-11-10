@@ -1,0 +1,17 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ] # ou "master", dependendo do nome da sua branch principal
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Pages e Implantar
+        uses: actions/deploy-pages@v4
