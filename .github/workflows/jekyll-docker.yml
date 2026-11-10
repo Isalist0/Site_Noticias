@@ -26,7 +26,8 @@ jobs:
         run: |
           echo "Verificando estrutura de arquivos..."
           test -f index.html
-          echo "Arquivo index.html encontrado!"
+          test -f style.css
+          echo "Arquivos verificados com sucesso!"
 
   test:
     needs: build
@@ -42,7 +43,7 @@ jobs:
 
   deploy:
     needs: [build, test]
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-latest
     environment:
       name: github-pages
